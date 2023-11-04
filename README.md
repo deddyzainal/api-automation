@@ -11,7 +11,7 @@ Before running the tests, make sure you have Node.js and npm installed on your m
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/your-username/api-automation.git
+   git clone https://github.com/deddyzainal/api-automation.git
 2. Navigate to the project directory:
    ```bash
    cd api-automation
