@@ -6,8 +6,33 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('API Tests', () => {
+  let authToken; // Store the authentication token for later use
   let bookingId; // Store the booking ID for later use
 
+  it('should create a new authentication token', async () => {
+    const credentials = {
+      "username": "your-username",
+      "password": "your-password"
+    };
+
+    const response = await chai.request('https://restful-booker.herokuapp.com').post('/auth').send(credentials);
+
+    expect(response).to.have.status(200);
+    expect(response.body).to.have.property('token');
+    authToken = response.body.token;
+  });
+
+  it('should handle invalid credentials', async () => {
+    const invalidCredentials = {
+      "username": "invalid-username",
+      "password": "invalid-password"
+    };
+
+    const response = await chai.request('https://restful-booker.herokuapp.com').post('/auth').send(invalidCredentials);
+
+    expect(response).to.have.status(401);
+  });
+  
   it('should create a new booking', async () => {
     const bookingData = {
       "firstname": "John",
@@ -88,8 +113,6 @@ it('should retrieve the booking IDs by date range', async () => {
   expect(response.body).to.be.an('array');
   expect(response.body).to.not.be.empty;
   response.body.forEach(booking => {
-    expect(booking).to.have.property('bookingid');
+  expect(booking).to.have.property('bookingid');
 });
-
-// Add more test cases for other API endpoints as needed
 });
